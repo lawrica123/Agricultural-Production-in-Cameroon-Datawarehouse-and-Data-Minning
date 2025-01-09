@@ -42,7 +42,7 @@ CREATE TABLE soil_dim (
 
 -- Create the region_dim table
 CREATE TABLE region_dim (
-    Region_ID INT PRIMARY KEY,
+    Region_ID DOUBLE PRIMARY KEY,
     Region_Name VARCHAR(100),
     Climate_ID INT,
     Soil_ID INT,
@@ -56,7 +56,7 @@ CREATE TABLE region_dim (
 -- Create the production_fact table
 CREATE TABLE production_fact (
     Production_ID INT PRIMARY KEY,
-    Region_ID INT,
+    Region_ID DOUBLE,
     Time_ID INT,
     Area_Harvested DECIMAL(10, 2),
     Crop_ID INT,
