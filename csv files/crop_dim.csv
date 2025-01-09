@@ -1,0 +1,211 @@
+Crop_ID,Crop_Name,Crop_Type,Market_Value,Growth_Duration,Water_Requirement
+2019301,Oil,Oil Crop,686.9,170,Low
+2019302,Yam,Root Crop,1435.93,259,High
+2019303,Macabo,Root Crop,1151.59,135,Moderate
+2019304,Taro,Root Crop,1151.59,135,Moderate
+2019305,Maize,Cereal,978.26,181,Low
+2019306,Cassava,Root Crop,402.82,264,High
+2019307,Onion,Vegetable,402.79,123,High
+2019308,garlic,Vegetable,402.79,123,High
+2019309,Watermelon,Fruit,275.51,116,High
+2019310,Sweet potato,Root Crop,1326.03,90,Low
+2019311,Chilli,Vegetable,981.45,90,Low
+2019312,Potato,Root Crop,1120.49,194,High
+2019313,Paddy rice,Cereal,226.76,246,Moderate
+2019314,Sesame,Oil Crop,1460.88,273,Moderate
+2019315,Soya,Legume,1282.18,270,Moderate
+2019316,Tomatoes,Vegetable,476.04,91,High
+2019317,Cowpea,Legume,436.37,281,Low
+2019318,Voandzou,Legume,438.43,118,Moderate
+2019319,Cocoa,Tree Crop,595.51,148,High
+2019320,Robusta coffee,Tree Crop,882.18,267,High
+2019321,Millet,Cereal,761.53,317,High
+2019322,Sorghum,Cereal,761.53,317,High
+2019323,Black nightshade,Vegetable,578.6,113,Moderate
+2019324,Coffee Arabica,Tree Crop,995.41,298,Low
+2019325,Cabbage,Vegetable,381.34,237,Moderate
+2019326,Pepper,Vegetable,579.79,141,Moderate
+2019327,Rubber,Tree Crop,676.27,231,Low
+2019328,Carrot,Vegetable,792.89,123,Low
+2019329,Mango,Fruit,1220.73,248,Moderate
+2019330,Eggplant (garden eggs),Vegetable,459.58,188,Low
+2019331,Avocado,Fruit,868.5,112,Low
+2019332,Orange,Fruit,970.14,254,Low
+2019333,Papaya,Fruit,260.39,330,High
+2019334,Sugar cane,Perennial grass,989.81,347,Moderate
+2019335,Mushroom,Fungus,421.68,162,Low
+2020336,Oil,Oil Crop,284.57,291,Low
+2020337,Yam,Root Crop,1433.55,297,Moderate
+2020338,Macabo,Root Crop,1455.32,334,High
+2020339,Taro,Root Crop,1455.32,334,High
+2020340,Maize,Cereal,1250.92,356,Moderate
+2020341,Cassava,Root Crop,596.0,171,Low
+2020342,Onion,Vegetable,326.97,170,High
+2020343,garlic,Vegetable,326.97,170,High
+2020344,Watermelon,Fruit,1089.5,136,Low
+2020345,Sweet potato,Root Crop,772.2,316,Moderate
+2020346,Chilli,Vegetable,358.65,258,Moderate
+2020347,Potato,Root Crop,843.73,160,Low
+2020348,Paddy rice,Cereal,244.71,167,High
+2020349,Sesame,Oil Crop,1382.12,155,Low
+2020350,Soya,Legume,536.41,141,High
+2020351,Tomatoes,Vegetable,1061.28,111,Low
+2020352,Cowpea,Legume,605.22,135,Moderate
+2020353,Voandzou,Legume,876.09,134,High
+2020354,Cocoa,Tree Crop,910.72,319,Low
+2020355,Robusta coffee,Tree Crop,440.31,321,Moderate
+2020356,Millet,Cereal,1460.46,320,Low
+2020357,Sorghum,Cereal,1460.46,320,Low
+2020358,Black nightshade,Vegetable,1207.67,158,Low
+2020359,Coffee Arabica,Tree Crop,1421.35,204,Moderate
+2020360,Cabbage,Vegetable,1363.28,357,High
+2020361,Pepper,Vegetable,977.27,283,Moderate
+2020362,Rubber,Tree Crop,1398.44,180,Low
+2020363,Carrot,Vegetable,315.04,310,High
+2020364,Mango,Fruit,454.78,104,Low
+2020365,Eggplant (garden eggs),Vegetable,258.8,129,High
+2020366,Avocado,Fruit,622.93,179,Low
+2020367,Orange,Fruit,705.28,126,Moderate
+2020368,Papaya,Fruit,552.75,280,Moderate
+2020369,Sugar cane,Perennial grass,1277.36,208,Low
+2020370,Mushroom,Fungus,663.78,310,Low
+2021371,Oil,Oil Crop,565.21,117,Low
+2021372,Yam,Root Crop,905.5,319,High
+2021373,Macabo,Root Crop,383.2,98,Moderate
+2021374,Taro,Root Crop,383.2,98,Moderate
+2021375,Maize,Cereal,1242.86,117,Low
+2021376,Cassava,Root Crop,296.92,143,Low
+2021377,Onion,Vegetable,1482.95,117,Moderate
+2021378,garlic,Vegetable,1482.95,117,Moderate
+2021379,Watermelon,Fruit,1203.92,140,Low
+2021380,Sweet potato,Root Crop,458.33,93,Low
+2021381,Chilli,Vegetable,207.18,216,Moderate
+2021382,Potato,Root Crop,1260.1,325,High
+2021383,Paddy rice,Cereal,1118.91,114,Low
+2021384,Sesame,Oil Crop,1147.71,162,High
+2021385,Soya,Legume,1202.65,198,High
+2021386,Tomatoes,Vegetable,296.26,112,High
+2021387,Cowpea,Legume,666.01,249,Moderate
+2021388,Voandzou,Legume,350.63,153,Moderate
+2021389,Cocoa,Tree Crop,1322.03,344,Low
+2021390,Robusta coffee,Tree Crop,1010.29,261,Moderate
+2021391,Millet,Cereal,630.17,108,Low
+2021392,Sorghum,Cereal,630.17,108,Low
+2021393,Black nightshade,Vegetable,282.63,172,High
+2021394,Coffee Arabica,Tree Crop,604.28,202,High
+2021395,Cabbage,Vegetable,622.74,210,Moderate
+2021396,Pepper,Vegetable,1148.49,250,Low
+2021397,Rubber,Tree Crop,1028.82,361,Moderate
+2021398,Carrot,Vegetable,1353.38,260,High
+2021399,Mango,Fruit,813.88,340,Moderate
+2021400,Eggplant (garden eggs),Vegetable,355.47,144,Low
+2021401,Avocado,Fruit,1127.22,269,Moderate
+2021402,Orange,Fruit,1189.02,106,High
+2021403,Papaya,Fruit,929.66,251,Moderate
+2021404,Sugar cane,Perennial grass,1202.26,160,Low
+2021405,Mushroom,Fungus,841.93,114,High
+2022406,Oil,Oil Crop,879.55,274,High
+2022407,Yam,Root Crop,755.8,179,Low
+2022408,Macabo,Root Crop,233.04,108,High
+2022409,Taro,Root Crop,233.04,108,High
+2022410,Maize,Cereal,340.26,363,Low
+2022411,Cassava,Root Crop,240.86,253,Low
+2022412,Onion,Vegetable,1027.33,337,Low
+2022413,garlic,Vegetable,1027.33,337,Low
+2022414,Watermelon,Fruit,608.66,356,Low
+2022415,Sweet potato,Root Crop,861.14,255,High
+2022416,Chilli,Vegetable,1379.84,112,Moderate
+2022417,Potato,Root Crop,524.08,216,High
+2022418,Paddy rice,Cereal,733.5,234,Moderate
+2022419,Sesame,Oil Crop,1182.22,121,Low
+2022420,Soya,Legume,497.44,95,Low
+2022421,Tomatoes,Vegetable,300.07,253,Moderate
+2022422,Cowpea,Legume,576.68,120,Moderate
+2022423,Voandzou,Legume,409.59,169,Moderate
+2022424,Cocoa,Tree Crop,1408.61,240,High
+2022425,Robusta coffee,Tree Crop,1250.56,143,High
+2022426,Millet,Cereal,1023.42,125,Low
+2022427,Sorghum,Cereal,1023.42,125,Low
+2022428,Black nightshade,Vegetable,1332.9,120,High
+2022429,Coffee Arabica,Tree Crop,1244.77,90,Moderate
+2022430,Cabbage,Vegetable,442.54,136,Low
+2022431,Pepper,Vegetable,1360.33,355,High
+2022432,Rubber,Tree Crop,901.14,267,High
+2022433,Carrot,Vegetable,1249.67,175,High
+2022434,Mango,Fruit,1364.92,261,Moderate
+2022435,Eggplant (garden eggs),Vegetable,613.4,166,High
+2022436,Avocado,Fruit,343.07,338,Low
+2022437,Orange,Fruit,496.32,289,High
+2022438,Papaya,Fruit,755.24,311,Moderate
+2022439,Sugar cane,Perennial grass,1263.42,215,Low
+2022440,Mushroom,Fungus,1318.95,223,Moderate
+2023441,Oil,Oil Crop,209.04,315,Moderate
+2023442,Yam,Root Crop,863.97,110,High
+2023443,Macabo,Root Crop,742.63,324,High
+2023444,Taro,Root Crop,742.63,324,High
+2023445,Maize,Cereal,488.74,162,High
+2023446,Cassava,Root Crop,355.82,115,Moderate
+2023447,Onion,Vegetable,638.9,185,Moderate
+2023448,garlic,Vegetable,638.9,185,Moderate
+2023449,Watermelon,Fruit,1425.78,178,Low
+2023450,Sweet potato,Root Crop,620.16,245,Low
+2023451,Chilli,Vegetable,874.43,198,Low
+2023452,Potato,Root Crop,1113.92,363,Moderate
+2023453,Paddy rice,Cereal,672.72,191,Low
+2023454,Sesame,Oil Crop,1463.32,148,Moderate
+2023455,Soya,Legume,1451.18,336,Low
+2023456,Tomatoes,Vegetable,527.32,218,Moderate
+2023457,Cowpea,Legume,846.42,111,Moderate
+2023458,Voandzou,Legume,591.14,328,High
+2023459,Cocoa,Tree Crop,570.29,134,Low
+2023460,Robusta coffee,Tree Crop,247.95,213,Low
+2023461,Millet,Cereal,992.43,147,Low
+2023462,Sorghum,Cereal,992.43,147,Low
+2023463,Black nightshade,Vegetable,853.48,179,Low
+2023464,Coffee Arabica,Tree Crop,266.92,249,Low
+2023465,Cabbage,Vegetable,562.24,105,Moderate
+2023466,Pepper,Vegetable,1380.75,110,High
+2023467,Rubber,Tree Crop,511.43,203,High
+2023468,Carrot,Vegetable,388.36,328,Low
+2023469,Mango,Fruit,836.29,126,Low
+2023470,Eggplant (garden eggs),Vegetable,1481.35,325,Low
+2023471,Avocado,Fruit,514.67,106,High
+2023472,Orange,Fruit,1073.78,258,Moderate
+2023473,Papaya,Fruit,1190.11,216,Low
+2023474,Sugar cane,Perennial grass,508.93,97,Low
+2023475,Mushroom,Fungus,1146.68,241,Moderate
+2024476,Oil,Oil Crop,678.12,128,Low
+2024477,Yam,Root Crop,1022.0,292,High
+2024478,Macabo,Root Crop,1023.59,314,Moderate
+2024479,Taro,Root Crop,1023.59,314,Moderate
+2024480,Maize,Cereal,896.51,124,Low
+2024481,Cassava,Root Crop,317.38,269,Low
+2024482,Onion,Vegetable,1285.89,356,High
+2024483,garlic,Vegetable,1285.89,356,High
+2024484,Watermelon,Fruit,617.01,278,Moderate
+2024485,Sweet potato,Root Crop,442.47,301,Moderate
+2024486,Chilli,Vegetable,253.01,264,High
+2024487,Potato,Root Crop,968.16,213,Low
+2024488,Paddy rice,Cereal,1080.83,106,Moderate
+2024489,Sesame,Oil Crop,221.56,348,Moderate
+2024490,Soya,Legume,865.72,247,Low
+2024491,Tomatoes,Vegetable,494.44,217,Moderate
+2024492,Cowpea,Legume,1038.72,164,High
+2024493,Voandzou,Legume,426.68,333,Moderate
+2024494,Cocoa,Tree Crop,1098.22,145,High
+2024495,Robusta coffee,Tree Crop,702.76,247,Moderate
+2024496,Millet,Cereal,1417.75,283,Moderate
+2024497,Sorghum,Cereal,1417.75,283,Moderate
+2024498,Black nightshade,Vegetable,378.78,222,Low
+2024499,Coffee Arabica,Tree Crop,643.39,217,Low
+2024500,Cabbage,Vegetable,347.52,353,Moderate
+2024501,Pepper,Vegetable,1402.1,311,Low
+2024502,Rubber,Tree Crop,1340.54,177,Low
+2024503,Carrot,Vegetable,535.32,92,Moderate
+2024504,Mango,Fruit,1057.98,214,High
+2024505,Eggplant (garden eggs),Vegetable,1262.39,302,Moderate
+2024506,Avocado,Fruit,921.76,198,Low
+2024507,Orange,Fruit,888.55,153,Low
+2024508,Papaya,Fruit,514.41,332,High
+2024509,Sugar cane,Perennial grass,321.03,288,Low
+2024510,Mushroom,Fungus,1366.38,315,Low

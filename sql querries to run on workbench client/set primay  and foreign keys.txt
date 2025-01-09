@@ -1,0 +1,37 @@
+-- 1. Modify column types to make them compatible with primary/foreign keys
+ALTER TABLE production_fact
+    MODIFY COLUMN Production_ID VARCHAR(255);  -- or INT if appropriate
+ALTER TABLE production_fact
+    MODIFY COLUMN Region_ID INT;
+ALTER TABLE production_fact
+    MODIFY COLUMN Crop_ID INT;
+ALTER TABLE production_fact
+    MODIFY COLUMN Time_ID INT;
+ALTER TABLE region_dim
+    MODIFY COLUMN Soil_ID INT;
+
+-- 2. Set Primary Keys
+ALTER TABLE climate_dim
+    ADD PRIMARY KEY (Climate_ID);
+ALTER TABLE crop_dim
+    ADD PRIMARY KEY (Crop_ID);
+ALTER TABLE time_dim
+    ADD PRIMARY KEY (Time_ID);
+ALTER TABLE soil_dim
+    ADD PRIMARY KEY (Soil_ID);
+ALTER TABLE region_dim
+    ADD PRIMARY KEY (Region_ID);
+ALTER TABLE production_fact
+    ADD PRIMARY KEY (Production_ID);
+
+-- 3. Set Foreign Keys
+ALTER TABLE region_dim
+    ADD CONSTRAINT fk_climate_id FOREIGN KEY (Climate_ID) REFERENCES climate_dim(Climate_ID);
+ALTER TABLE region_dim
+    ADD CONSTRAINT fk_soil_id FOREIGN KEY (Soil_ID) REFERENCES soil_dim(Soil_ID);
+ALTER TABLE production_fact
+    ADD CONSTRAINT fk_region_id FOREIGN KEY (Region_ID) REFERENCES region_dim(Region_ID);
+ALTER TABLE production_fact
+    ADD CONSTRAINT fk_crop_id FOREIGN KEY (Crop_ID) REFERENCES crop_dim(Crop_ID);
+ALTER TABLE production_fact
+    ADD CONSTRAINT fk_time_id FOREIGN KEY (Time_ID) REFERENCES time_dim(Time_ID);
