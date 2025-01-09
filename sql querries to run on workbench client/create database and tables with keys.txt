@@ -1,0 +1,68 @@
+-- Create the agric_cameroon database
+CREATE DATABASE agric_cameroon;
+
+-- Use the agric_cameroon database
+USE agric_cameroon;
+
+-- Create the climate_dim table
+CREATE TABLE climate_dim (
+    Climate_ID INT PRIMARY KEY,
+    Climate_Name VARCHAR(100),
+    Avg_Temperature DECIMAL(5, 2),
+    Humidity_Level DECIMAL(5, 2),
+    Annual_Rainfall INT
+);
+
+-- Create the crop_dim table
+CREATE TABLE crop_dim (
+    Crop_ID INT PRIMARY KEY,
+    Crop_Name VARCHAR(100),
+    Crop_Type VARCHAR(50),
+    Market_Value DECIMAL(10, 2),
+    Growth_Duration INT,
+    Water_Requirement VARCHAR(50)
+);
+
+-- Create the time_dim table
+CREATE TABLE time_dim (
+    Time_ID INT PRIMARY KEY,
+    Year INT NOT NULL,
+    Month INT NOT NULL,
+    Quarter VARCHAR(10),
+    Season VARCHAR(20)
+);
+
+-- Create the soil_dim table
+CREATE TABLE soil_dim (
+    Soil_ID INT PRIMARY KEY,
+    Soil_Type VARCHAR(50),
+    pH_Level DECIMAL(3, 2),
+    Organic_Matter DECIMAL(5, 2)
+);
+
+-- Create the region_dim table
+CREATE TABLE region_dim (
+    Region_ID INT PRIMARY KEY,
+    Region_Name VARCHAR(100),
+    Climate_ID INT,
+    Soil_ID INT,
+    Avg_Annual_Rainfall INT,
+    Altitude INT,
+    Population INT,
+    FOREIGN KEY (Climate_ID) REFERENCES climate_dim(Climate_ID),
+    FOREIGN KEY (Soil_ID) REFERENCES soil_dim(Soil_ID)
+);
+
+-- Create the production_fact table
+CREATE TABLE production_fact (
+    Production_ID INT PRIMARY KEY,
+    Region_ID INT,
+    Time_ID INT,
+    Area_Harvested DECIMAL(10, 2),
+    Crop_ID INT,
+    Quantity INT,
+    Yield INT,
+    FOREIGN KEY (Region_ID) REFERENCES region_dim(Region_ID),
+    FOREIGN KEY (Time_ID) REFERENCES time_dim(Time_ID),
+    FOREIGN KEY (Crop_ID) REFERENCES crop_dim(Crop_ID)
+);
