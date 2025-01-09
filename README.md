@@ -17,6 +17,7 @@ Before you begin, ensure you have the following software installed:
 - **Python**: Version 3.7 or higher
 - **pip**: Python package installer
 - **MySQL Workbench 8.0 CE**: to create your database
+- **Jupyter notebook(anaconda)**:to perform data ware house and datamining processes
 - **Git**: To clone the repository 
 
 You can check the installed versions by running the following commands:
