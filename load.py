@@ -15,8 +15,8 @@ try:
     conn = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='uct04bgs101120',
-        database='agric_cameroon'
+        password='your password',
+        database='agric_cameroon' #DONOT CHANGE
     )
     cursor = conn.cursor()
     print("Connected to the database.")
