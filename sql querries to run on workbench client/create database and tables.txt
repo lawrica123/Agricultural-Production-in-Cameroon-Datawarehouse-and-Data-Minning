@@ -36,8 +36,8 @@ CREATE TABLE time_dim (
 CREATE TABLE soil_dim (
     Soil_ID INT,
     Soil_Type TEXT,
-    pH_Level DECIMAL(5, 2), -- Allows up to 3 digits total, with 2 after the decimal
-    Organic_Matter DECIMAL(2, 1) -- Allows up to 5 digits total, with 2 after the decimal
+    pH_Level DECIMAL(3, 2), -- Allows up to 3 digits total, with 2 after the decimal
+    Organic_Matter DECIMAL(5, 2) -- Allows up to 5 digits total, with 2 after the decimal
 );
 
 -- Create the region_dim table
@@ -54,10 +54,10 @@ CREATE TABLE region_dim (
 -- Create the dim_table_large table
 CREATE TABLE production_fact (
     Production_ID TEXT,
-    Region_ID TEXT,
-    Crop_ID TEXT, 
-    Time_ID TEXT,
-    Area_Harvested DECIMAL(5,3),
+    Region_ID DOUBLE,
+    Time_ID INT,
+    Area_Harvested DECIMAL(3,2),
+    Crop_ID INT, 
     Quantity INT,  
-    Yield DECIMAL(5,3)  
+    Yield INT  
 );
