@@ -56,8 +56,8 @@ CREATE TABLE production_fact (
     Production_ID TEXT,
     Region_ID DOUBLE,
     Time_ID INT,
-    Area_Harvested DECIMAL(3,2),
+    Area_Harvested DECIMAL(5,2),
     Crop_ID INT, 
     Quantity INT,  
-    Yield DECIMAL(3,2)  
+    Yield DECIMAL(5,2)  
 );
