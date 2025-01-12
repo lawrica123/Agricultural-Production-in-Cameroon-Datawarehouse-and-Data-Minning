@@ -1,4 +1,4 @@
-Climate_ID,Climate_Name,Avg_Temperature,Humidity_Level,Annual_Rainfall
+climate_id,climate_name,avg_temperature,humidity_level,annual_rainfall
 2019001,Equatorial,25.6,71.0,1000
 2019002,Tropical Savanna,28.5,54.7,2500
 2019003,Semi-Arid (Sahelian),33.9,45.7,2000
