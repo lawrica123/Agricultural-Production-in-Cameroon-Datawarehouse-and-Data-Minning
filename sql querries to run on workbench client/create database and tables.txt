@@ -53,7 +53,7 @@ CREATE TABLE region_dim (
 
 -- Create the dim_table_large table
 CREATE TABLE production_fact (
-    Production_ID TEXT,
+    Production_ID VARCHAR(100),
     Region_ID DOUBLE,
     Time_ID INT,
     Area_Harvested DECIMAL(5,2),
