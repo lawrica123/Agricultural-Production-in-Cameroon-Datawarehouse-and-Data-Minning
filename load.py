@@ -7,7 +7,7 @@ crop_csv = './csv files/crop_dim.csv'
 region_csv = './csv files/region_dim.csv'
 soil_csv = './csv files/soil_dim.csv'
 time_csv = './csv files/time_dim.csv'
-production_csv = './csv files/production_facts.csv'
+production_csv = './csv files/production_fact.csv'
 
 # Database connection details
 # Connect to MySQL Database
@@ -15,11 +15,20 @@ try:
     conn = mysql.connector.connect(
         host='localhost',
         user='root',
-        password='your password',
-        database='agric_cameroon' #DONOT CHANGE
+        password='uct04bgs101120',
+        database='agric_cameroon'
     )
     cursor = conn.cursor()
     print("Connected to the database.")
+
+    # Load and insert soil_dim data
+    soil_df = pd.read_csv(soil_csv)
+    for _, row in soil_df.iterrows():
+        cursor.execute("""
+            INSERT INTO soil_dim (Soil_ID,Soil_Type,pH_Level,Organic_Matter)
+            VALUES (%s, %s, %s, %s )
+        """, (row['Soil_ID'], row['Soil_Type'], row['pH_Level'], row['Organic_Matter']))
+        
 
     # Load and insert climate_Dim data
     climate_df = pd.read_csv(climate_csv)
@@ -45,14 +54,6 @@ try:
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (row['Region_ID'], row['Region_Name'], row['Climate_ID'], row['Soil_ID'], row['Avg_Annual_Rainfall'], row['Altitude'], row['Population']))
 
-    # Load and insert soil_dim data
-    soil_df = pd.read_csv(soil_csv)
-    for _, row in soil_df.iterrows():
-        cursor.execute("""
-            INSERT INTO soil_dim (Soil_ID,Soil_Type,pH_Level,Organic_Matter)
-            VALUES (%s, %s, %s, %s )
-        """, (row['Soil_ID'], row['Soil_Type'], row['pH_Level'], row['Organic_Matter']))
-        
     # Load and insert time_dim data
     time_df = pd.read_csv(time_csv)
     for _, row in time_df.iterrows():
@@ -69,6 +70,7 @@ try:
             INSERT INTO production_fact(Production_ID,Region_ID,Crop_ID,Time_ID,Area_Harvested,Quantity,Yield)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (row['Production_ID'], row['Region_ID'], row['Crop_ID'], row['Time_ID'], row['Area_Harvested'], row['Quantity'], row['Yield']))
+
 
 
     # Commit the transactions
