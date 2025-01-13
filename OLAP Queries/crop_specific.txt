@@ -1,3 +1,4 @@
+USE agric_cameroon;
 SELECT Crop_Type, Region_Name, SUM(Quantity) AS TotalProduction 
 FROM Production_Fact 
 JOIN Crop_Dim ON Production_Fact.Crop_ID = Crop_Dim.Crop_ID 
