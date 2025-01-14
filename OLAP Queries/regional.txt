@@ -1,5 +1,0 @@
-SELECT Region_Name, AVG(Quantity) AS AvgProduction, AVG(Avg_Annual_Rainfall) AS AvgRainfall 
-FROM Production_fact
-JOIN Region_Dim ON Production_fact.Region_ID =Region_Dim.Region_ID 
-GROUP BY Region_Name 
-ORDER BY AvgProduction DESC;
