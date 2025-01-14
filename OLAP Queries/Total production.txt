@@ -1,9 +1,0 @@
-#Total Production by Crop and Climate Type
-
-SELECT c.Climate_Name, c.Crop_Name, SUM(p.Quantity) AS Total_Production
-FROM production_fact p
-JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
-JOIN region_dim r ON p.Region_ID = r.Region_ID
-JOIN climate_dim c ON r.Climate_ID = c.Climate_ID
-GROUP BY c.Climate_Name, c.Crop_Name
-ORDER BY c.Climate_Name, c.Crop_Name;
