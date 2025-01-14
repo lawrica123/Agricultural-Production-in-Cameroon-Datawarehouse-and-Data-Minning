@@ -1,0 +1,9 @@
+# Year-over-Year Growth in Crop Production by Region
+
+SELECT r.Region_Name, t.Year, 
+       SUM(p.Quantity) - LAG(SUM(p.Quantity)) OVER (PARTITION BY r.Region_Name ORDER BY t.Year) AS YoY_Growth
+FROM production_fact p
+JOIN region_dim r ON p.Region_ID = r.Region_ID
+JOIN time_dim t ON p.Time_ID = t.Time_ID
+GROUP BY r.Region_Name, t.Year
+ORDER BY r.Region_Name, t.Year;

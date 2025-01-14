@@ -1,0 +1,8 @@
+# Average Yield per Crop Type by Region
+
+SELECT r.Region_Name, c.Crop_Type, AVG(p.Yield) AS Avg_Yield
+FROM production_fact p
+JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
+JOIN region_dim r ON p.Region_ID = r.Region_ID
+GROUP BY r.Region_Name, c.Crop_Type
+ORDER BY r.Region_Name, c.Crop_Type;
