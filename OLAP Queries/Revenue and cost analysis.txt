@@ -1,8 +1,0 @@
-#Revenue and Cost Analysis by Region and Crop
-
-SELECT r.Region_Name, c.Crop_Name, SUM(p.Revenue) AS Total_Revenue, SUM(p.Cost) AS Total_Cost
-FROM production_fact p
-JOIN region_dim r ON p.Region_ID = r.Region_ID
-JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
-GROUP BY r.Region_Name, c.Crop_Name
-ORDER BY r.Region_Name, c.Crop_Name;
