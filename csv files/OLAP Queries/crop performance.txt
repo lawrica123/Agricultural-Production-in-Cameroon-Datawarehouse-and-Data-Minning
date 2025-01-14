@@ -1,0 +1,8 @@
+# Crop Performance Analysis Across Different Seasons
+
+SELECT t.Season, c.Crop_Name, AVG(p.Yield) AS Avg_Yield
+FROM production_fact p
+JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
+JOIN time_dim t ON p.Time_ID = t.Time_ID
+GROUP BY t.Season, c.Crop_Name
+ORDER BY t.Season, c.Crop_Name;
