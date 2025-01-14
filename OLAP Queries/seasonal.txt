@@ -1,5 +1,0 @@
-SELECT Month, SUM(Quantity) AS TotalProduction 
-FROM Production_Fact 
-JOIN Time_Dim ON Production_Fact.Time_ID = Time_Dim.Time_ID 
-GROUP BY Month 
-ORDER BY Month;
