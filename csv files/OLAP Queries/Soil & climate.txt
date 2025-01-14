@@ -1,0 +1,9 @@
+# Soil and Climate Impact on Yield by Region
+
+SELECT r.Region_Name, s.Soil_Type, c.Climate_Name, AVG(p.Yield) AS Avg_Yield
+FROM production_fact p
+JOIN region_dim r ON p.Region_ID = r.Region_ID
+JOIN soil_dim s ON r.Soil_ID = s.Soil_ID
+JOIN climate_dim c ON r.Climate_ID = c.Climate_ID
+GROUP BY r.Region_Name, s.Soil_Type, c.Climate_Name
+ORDER BY r.Region_Name, s.Soil_Type, c.Climate_Name;

@@ -1,8 +1,8 @@
-# Top 5 Crops by Market Value and Production Volume
+ Top 5 Crops by Market Value and Production Volume
 
 SELECT c.Crop_Name, SUM(p.Quantity) AS Total_Production, SUM(c.Market_Value * p.Quantity) AS Total_Market_Value
 FROM production_fact p
 JOIN crop_dim c ON p.Crop_ID = c.Crop_ID
 GROUP BY c.Crop_Name
 ORDER BY Total_Market_Value DESC
-LIMIT 5;
+;
