@@ -1,7 +1,0 @@
-use agric_cameroon;
-SELECT Crop_Type, Region_Name, SUM(Quantity) AS TotalProduction 
-FROM Production_Fact 
-JOIN Crop_Dim ON Production_Fact.Crop_ID = Crop_Dim.Crop_ID 
-JOIN Region_Dim ON Production_Fact.Region_ID = Region_Dim.Region_ID 
-GROUP BY Crop_Type, Region_Name 
-ORDER BY TotalProduction DESC;
