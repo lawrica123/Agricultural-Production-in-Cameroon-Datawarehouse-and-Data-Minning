@@ -7,8 +7,8 @@ def connect_to_database():
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='uct04bgs101120',
-            database='agric_cameroon'
+            password='0123456789',
+            database='cameroon_agric'
         )
         cursor = conn.cursor()
         print("Connected to the database.")
