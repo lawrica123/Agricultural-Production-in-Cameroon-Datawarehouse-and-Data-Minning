@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from tabulate import tabulate
 
 # Replace these dummy database credentials with your actual database details
 DB_HOST = 'localhost'
@@ -7,8 +8,10 @@ DB_USER = 'root'
 DB_PASSWORD = 'Chunelson123'
 DB_NAME = 'agric_cameroon'
 
+# Queries for fetching and summarizing data
 queries = [
-    # Query 1: Basic join for production analysis
+    # Add your list of queries here as in the original code
+#Basic join for production analysis
     """
     SELECT 
         pf.Production_ID,
@@ -26,7 +29,7 @@ queries = [
     JOIN time_dim td ON pf.Time_ID = td.Time_ID
     ORDER BY td.Year, td.Month;
     """,
-    # Query 2: Total production by region and year
+    #Total production by region and year
     """
     SELECT 
         rd.Region_Name,
@@ -39,7 +42,7 @@ queries = [
     GROUP BY rd.Region_Name, td.Year
     ORDER BY rd.Region_Name, td.Year;
     """,
-    # Query 3: Crop performance by region
+    #Crop performance by region
     """
     SELECT 
         cd.Crop_Name,
@@ -53,7 +56,7 @@ queries = [
     GROUP BY cd.Crop_Name, rd.Region_Name
     ORDER BY cd.Crop_Name, Total_Quantity DESC;
     """,
-    # Query 4: Seasonal production trends
+    #Seasonal production trends
     """
     SELECT 
         td.Season,
@@ -66,7 +69,7 @@ queries = [
     GROUP BY td.Season, cd.Crop_Name
     ORDER BY td.Season, Total_Quantity DESC;
     """,
-    # Query 5: Climate impact on production
+    #Climate impact on production
     """
     SELECT 
         cld.Climate_Name,
@@ -80,7 +83,7 @@ queries = [
     GROUP BY cld.Climate_Name, cd.Crop_Name
     ORDER BY cld.Climate_Name, Average_Yield DESC;
     """,
-    # Query 6: Production summary by soil type
+    #Production summary by soil type
     """
     SELECT 
         sd.Soil_Type,
@@ -94,7 +97,7 @@ queries = [
     GROUP BY sd.Soil_Type, cd.Crop_Name
     ORDER BY sd.Soil_Type, Average_Yield DESC;
     """,
-    # Query 7: Yearly crop production comparison
+    #Yearly crop production comparison
     """
     SELECT 
         cd.Crop_Name,
@@ -107,7 +110,7 @@ queries = [
     GROUP BY cd.Crop_Name, td.Year
     ORDER BY cd.Crop_Name, td.Year;
     """,
-    # Query 8: Regional production summary
+    #Regional production summary
     """
     SELECT 
         rd.Region_Name,
@@ -120,7 +123,7 @@ queries = [
     GROUP BY rd.Region_Name, rd.Population
     ORDER BY Total_Quantity DESC;
     """,
-    # Query 9: Detailed Production Report
+    #Detailed Production Report
     """
     SELECT 
         pf.Production_ID,
@@ -143,7 +146,20 @@ queries = [
     """
 ]
 
-def run_queries():
+# Corresponding table names for saving results
+table_names = [
+    "production_analysis",
+    "total_production_by_region",
+    "crop_performance_by_region",
+    "seasonal_production_trends",
+    "climate_impact_on_production",
+    "production_summary_by_soil_type",
+    "yearly_crop_production_comparison",
+    "regional_production_summary",
+    "detailed_production_report"
+]
+
+def run_queries_and_save():
     try:
         connection = mysql.connector.connect(
             host=DB_HOST,
@@ -154,14 +170,33 @@ def run_queries():
 
         if connection.is_connected():
             cursor = connection.cursor()
-            for index, query in enumerate(queries, start=1):
-                print(f"Executing Query {index}...")
+
+            for index, (query, table_name) in enumerate(zip(queries, table_names), start=1):
+                print(f"Executing Query {index} and saving results into '{table_name}'...")
                 cursor.execute(query)
                 results = cursor.fetchall()
-                print(f"Results for Query {index}:")
-                for row in results:
-                    print(row)
-                print("\n")
+                columns = [desc[0] for desc in cursor.description]  # Fetch column names
+
+                # Display results in a table format
+                print(tabulate(results, headers=columns, tablefmt="grid"))
+
+                # Create table to save results
+                create_table_query = f"""
+                CREATE TABLE IF NOT EXISTS {table_name} (
+                    {', '.join([f'{col} TEXT' for col in columns])}
+                );
+                """
+                cursor.execute(create_table_query)
+
+                # Insert results into the table
+                insert_query = f"""
+                INSERT INTO {table_name} ({', '.join(columns)})
+                VALUES ({', '.join(['%s'] * len(columns))})
+                """
+                cursor.executemany(insert_query, results)
+                connection.commit()
+
+                print(f"Results saved into table '{table_name}'.\n")
 
     except Error as e:
         print(f"Error: {e}")
@@ -173,4 +208,4 @@ def run_queries():
             print("MySQL connection is closed.")
 
 if __name__ == "__main__":
-    run_queries()
+    run_queries_and_save()
