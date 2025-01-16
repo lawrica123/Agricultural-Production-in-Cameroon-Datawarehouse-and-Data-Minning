@@ -1,5 +1,6 @@
 import pandas as pd
 import sqlite3
+import matplotlib.pyplot as plt
 
 # Load the data
 data_path = './feature/output/data_with_clusters.csv'
@@ -11,7 +12,7 @@ conn = sqlite3.connect(':memory:')
 # Write the dataframe to an SQL table
 df.to_sql('data_with_clusters', conn, if_exists='replace', index=False)
 
-# 1. Regions with Highest Production Variability
+# Query 1: Regions with Highest Production Variability
 query1 = """
 SELECT 
     Region_Name, 
@@ -24,11 +25,18 @@ ORDER BY
     Max_Production_Variability DESC;
 """
 result1 = pd.read_sql_query(query1, conn)
-print("Regions with Highest Production Variability:")
-print(result1)
-print()
 
-# 2. Relationship Between Temperature and Production
+# Visualization: Bar chart for query 1
+plt.figure(figsize=(10, 6))
+plt.bar(result1['Region_Name'], result1['Max_Production_Variability'], color='skyblue')
+plt.title('Regions with Highest Production Variability')
+plt.xlabel('Region Name')
+plt.ylabel('Production Variability')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+# Query 2: Relationship Between Temperature and Production
 query2 = """
 SELECT 
     Region_Name, 
@@ -42,11 +50,18 @@ ORDER BY
     Avg_Temperature DESC;
 """
 result2 = pd.read_sql_query(query2, conn)
-print("Relationship Between Temperature and Production:")
-print(result2)
-print()
 
-# 3. Correlation Between Rainfall and Production
+# Visualization: Scatter plot for query 2
+plt.figure(figsize=(10, 6))
+plt.scatter(result2['Avg_Temperature'], result2['Total_Production'], color='green')
+plt.title('Relationship Between Temperature and Production')
+plt.xlabel('Average Temperature')
+plt.ylabel('Total Annual Production')
+plt.grid()
+plt.tight_layout()
+plt.show()
+
+# Query 3: Correlation Between Rainfall and Production
 query3 = """
 SELECT 
     Annual_Rainfall, 
@@ -59,11 +74,18 @@ ORDER BY
     Annual_Rainfall;
 """
 result3 = pd.read_sql_query(query3, conn)
-print("Correlation Between Rainfall and Production:")
-print(result3)
-print()
 
-# 4. Cluster Membership Analysis
+# Visualization: Line plot for query 3
+plt.figure(figsize=(10, 6))
+plt.plot(result3['Annual_Rainfall'], result3['Avg_Production'], marker='o', color='purple')
+plt.title('Correlation Between Rainfall and Production')
+plt.xlabel('Annual Rainfall')
+plt.ylabel('Average Production')
+plt.grid()
+plt.tight_layout()
+plt.show()
+
+# Query 4: Cluster Membership Analysis
 query4 = """
 SELECT 
     Cluster_Label, 
@@ -76,11 +98,17 @@ ORDER BY
     Region_Count DESC;
 """
 result4 = pd.read_sql_query(query4, conn)
-print("Cluster Membership Analysis:")
-print(result4)
-print()
 
-# 5. Highest Production Region by Cluster
+# Visualization: Bar chart for query 4
+plt.figure(figsize=(10, 6))
+plt.bar(result4['Cluster_Label'], result4['Region_Count'], color='orange')
+plt.title('Cluster Membership Analysis')
+plt.xlabel('Cluster Label')
+plt.ylabel('Number of Regions')
+plt.tight_layout()
+plt.show()
+
+# Query 5: Highest Production Region by Cluster
 query5 = """
 SELECT 
     Cluster_Label, 
@@ -96,11 +124,17 @@ ORDER BY
     Max_Production DESC;
 """
 result5 = pd.read_sql_query(query5, conn)
-print("Highest Production Region by Cluster:")
-print(result5)
-print()
 
-# 6. Extreme Weather and Its Impact
+# Visualization: Stacked bar chart for query 5
+result5_pivot = result5.pivot(index='Cluster_Label', columns='Region_Name', values='Max_Production')
+result5_pivot.plot(kind='bar', stacked=True, figsize=(12, 6), colormap='viridis')
+plt.title('Highest Production Region by Cluster')
+plt.xlabel('Cluster Label')
+plt.ylabel('Max Production')
+plt.tight_layout()
+plt.show()
+
+# Query 6: Extreme Weather and Its Impact
 query6 = """
 SELECT 
     Region_Name, 
@@ -115,9 +149,19 @@ ORDER BY
     Max_Temperature DESC, Min_Temperature;
 """
 result6 = pd.read_sql_query(query6, conn)
-print("Extreme Weather and Its Impact:")
-print(result6)
-print()
+
+# Visualization: Multi-bar chart for query 6
+plt.figure(figsize=(12, 6))
+x = range(len(result6['Region_Name']))
+plt.bar(x, result6['Min_Temperature'], width=0.4, label='Min Temperature', align='center', color='blue')
+plt.bar(x, result6['Max_Temperature'], width=0.4, label='Max Temperature', align='edge', color='red')
+plt.xticks(x, result6['Region_Name'], rotation=45, ha='right')
+plt.title('Extreme Weather and Its Impact')
+plt.xlabel('Region Name')
+plt.ylabel('Temperature')
+plt.legend()
+plt.tight_layout()
+plt.show()
 
 # Close the database connection
 conn.close()
