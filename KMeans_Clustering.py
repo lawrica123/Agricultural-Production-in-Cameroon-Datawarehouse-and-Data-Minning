@@ -1,97 +1,152 @@
-import os
 import pandas as pd
-import numpy as np
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import StandardScaler
-import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend
+from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
+from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.decomposition import PCA
+from fuzzywuzzy import process
 
-# Load all CSV files from the features directory
-features_dir = "./Features/output"
-feature_files = [
-    "Annual_Rainfall.csv",
-    "Avg_Annual_Production.csv",
-    "Avg_Temperature.csv",
-    "Drought_Index.csv",
-    "Growing_Season_Length.csv",
-    "Moisture_Index.csv",
-    "Production_Growth_Rate.csv",
-    "Production_Variability.csv",
-]
+# Load the merged CSV data
+merged_data_path = "./feature/output/merged_data.csv"
+region_dim_path = "./csv files/region_dim.csv"
 
-# Add meaningful column names to each file and merge
-all_features = []
-for file in feature_files:
-    file_path = os.path.join(features_dir, file)
-    df = pd.read_csv(file_path, header=None, encoding='utf-8')  # Explicitly set UTF-8 encoding
-    feature_name = os.path.splitext(file)[0]
-    column_names = ["ID"] + [f"{feature_name}_col{i}" for i in range(1, df.shape[1])]
-    df.columns = column_names[:df.shape[1]]  # Handle variable column lengths
-    all_features.append(df)
+df = pd.read_csv(merged_data_path)
 
-# Merge all features into a single DataFrame
-merged_df = all_features[0]
-for df in all_features[1:]:
-    merged_df = pd.merge(merged_df, df, on="ID", how="outer")
+# Print the first and last records of the dataframe
+print("Entry Records of the DataFrame:")
+print(df.head())
+print("\nEnding Records of the DataFrame:")
+print(df.tail())
 
-# Ensure all non-numeric columns are excluded for clustering
-for col in merged_df.columns:
-    if col != "ID":  # Exclude the ID column
-        merged_df[col] = pd.to_numeric(merged_df[col], errors="coerce")
+# Handle missing data
+df = df.dropna()  # Drop rows with missing values
+# Optionally: df.fillna(value, inplace=True) to impute missing values
 
-merged_df.fillna(0, inplace=True)
+# Load and preprocess the Region_Name data
+region_df = pd.read_csv(region_dim_path)
 
-# Standardize the numeric data
+# Filter out non-string values in Region_Name and drop duplicates
+region_df["Region_Name"] = region_df["Region_Name"].astype(str)
+region_df = region_df[region_df["Region_Name"].str.isalpha()]  # Keep only alphabetic region names
+region_df = region_df.drop_duplicates(subset=["Region_Name"])  # Drop duplicate region names
+
+# Select only the necessary columns and remove duplicates
+region_df = region_df[["Region_ID", "Region_Name"]].drop_duplicates()
+
+# Ensure the Region_ID columns are of the same data type (e.g., str) before merging
+df["Region_ID"] = df["Region_ID"].astype(str)
+region_df["Region_ID"] = region_df["Region_ID"].astype(str)
+
+# Merge Region_Name with the main dataframe on Region_ID
+df = df.merge(region_df, on="Region_ID", how="left")
+
+# Fuzzy match region names to handle mismatches
+def fuzzy_match_region_names(region_df, target_df):
+    region_names = region_df["Region_Name"].tolist()
+    # Ensure all values in the Region_Name column are treated as strings
+    target_df["Region_Name"] = target_df["Region_Name"].astype(str)
+    # Apply fuzzy matching, and ignore non-string values (such as NaN)
+    target_df["Region_Name"] = target_df["Region_Name"].apply(
+        lambda x: process.extractOne(x, region_names)[0] if isinstance(x, str) else None
+    )
+    return target_df
+
+df = fuzzy_match_region_names(region_df, df)
+
+# Handle categorical data
+categorical_cols = df.select_dtypes(include=["object"]).columns
+if categorical_cols.any():
+    encoder = OneHotEncoder(sparse_output=False, drop="first")
+    encoded_data = encoder.fit_transform(df[categorical_cols])
+    encoded_df = pd.DataFrame(encoded_data, columns=encoder.get_feature_names_out(categorical_cols))
+    df = pd.concat([df.drop(columns=categorical_cols), encoded_df], axis=1)
+
+# Feature selection
+selector = VarianceThreshold(threshold=0.1)  # Remove low variance features
+X = selector.fit_transform(df)
+
+# Standardize the data
 scaler = StandardScaler()
-scaled_data = scaler.fit_transform(merged_df.drop(columns=["ID"]))
+X_scaled = scaler.fit_transform(X)
 
-# Determine the optimal number of clusters
-sse, silhouette_scores, K_range = [], [], range(2, 11)
-for k in K_range:
-    kmeans = KMeans(n_clusters=k, init='k-means++', random_state=42, n_init=10)
-    kmeans.fit(scaled_data)
-    sse.append(kmeans.inertia_)
-    silhouette_scores.append(silhouette_score(scaled_data, kmeans.labels_))
+# Dimensionality reduction
+pca = PCA(n_components=0.95)  # Retain 95% of variance
+X_pca = pca.fit_transform(X_scaled)
 
-# Plot Elbow and Silhouette Analysis
-plt.figure(figsize=(10, 5))
-plt.plot(K_range, sse, marker='o')
-plt.title('Elbow Method')
-plt.xlabel('Number of Clusters')
-plt.ylabel('SSE')
-plt.savefig('elbow_method.png')
+# Cluster validation with multiple values of k
+metrics = {
+    "Silhouette": [],
+    "Davies-Bouldin": [],
+    "Calinski-Harabasz": []
+}
+k_values = range(2, 11)
+for k in k_values:
+    kmeans = KMeans(n_clusters=k, init="k-means++", random_state=42)
+    labels = kmeans.fit_predict(X_pca)
+    silhouette = silhouette_score(X_pca, labels)
+    davies_bouldin = davies_bouldin_score(X_pca, labels)
+    calinski_harabasz = calinski_harabasz_score(X_pca, labels)
 
-plt.figure(figsize=(10, 5))
-plt.plot(K_range, silhouette_scores, marker='o', color='orange')
-plt.title('Silhouette Analysis')
-plt.xlabel('Number of Clusters')
-plt.ylabel('Silhouette Score')
-plt.savefig('silhouette_analysis.png')
+    # Append values to metrics
+    metrics["Silhouette"].append(silhouette)
+    metrics["Davies-Bouldin"].append(davies_bouldin)
+    metrics["Calinski-Harabasz"].append(calinski_harabasz)
+    
+    # Print the metrics values for each k
+    print(f"\nMetrics for k={k}:")
+    print(f"Silhouette Score: {silhouette}")
+    print(f"Davies-Bouldin Index: {davies_bouldin}")
+    print(f"Calinski-Harabasz Index: {calinski_harabasz}")
 
-# Fit the final k-Means model
-optimal_k = silhouette_scores.index(max(silhouette_scores)) + 2
-kmeans_final = KMeans(n_clusters=optimal_k, init='k-means++', random_state=42, n_init=10)
-kmeans_final.fit(scaled_data)
-merged_df['Cluster'] = kmeans_final.labels_
+# Plot metrics for k values
+plt.figure(figsize=(12, 6))
+plt.plot(k_values, metrics["Silhouette"], label="Silhouette Score")
+plt.plot(k_values, metrics["Davies-Bouldin"], label="Davies-Bouldin Index")
+plt.plot(k_values, metrics["Calinski-Harabasz"], label="Calinski-Harabasz Index")
+plt.title("Cluster Validation Metrics")
+plt.xlabel("Number of Clusters (k)")
+plt.ylabel("Score")
+plt.legend()
+plt.grid(True)
+plt.show()
 
-# Visualize clusters using PCA
-pca = PCA(n_components=2)
-pca_data = pca.fit_transform(scaled_data)
+# Choose optimal k based on combined evaluation
+optimal_k = 4  # Update based on evaluation
+print(f"\nOptimal number of clusters (k): {optimal_k}")
 
-plt.figure(figsize=(10, 8))
-sns.scatterplot(
-    x=pca_data[:, 0],
-    y=pca_data[:, 1],
-    hue=kmeans_final.labels_,
-    palette='viridis',
-    s=100
-)
-plt.title('Cluster Visualization (PCA)')
-plt.xlabel('PCA Component 1')
-plt.ylabel('PCA Component 2')
-plt.legend(title='Cluster')
-plt.savefig('cluster_visualization.png')
+# Perform KMeans clustering with optimal k
+kmeans = KMeans(n_clusters=optimal_k, init="k-means++", random_state=42)
+labels = kmeans.fit_predict(X_pca)
+
+# Assign meaningful names to clusters
+cluster_names = {0: "High Capacity", 1: "Moderate Capacity", 2: "Low Capacity", 3: "Emerging"}
+df["Cluster"] = labels
+df["Cluster_Label"] = df["Cluster"].map(cluster_names)
+
+# Visualization with t-SNE
+tsne = TSNE(n_components=2, random_state=42)
+X_tsne = tsne.fit_transform(X_pca)
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x=X_tsne[:, 0], y=X_tsne[:, 1], hue=df["Cluster_Label"], palette="viridis")
+plt.title("Cluster Visualization with t-SNE")
+plt.xlabel("t-SNE Component 1")  # Label for the x-axis
+plt.ylabel("t-SNE Component 2")  # Label for the y-axis
+plt.show()
+
+# Merge with Region_Name
+df_with_regions = df.join(region_df, how="left").dropna(subset=["Region_Name"])
+
+# Save unmatched regions
+unmatched_regions = set(region_df["Region_Name"]) - set(df_with_regions["Region_Name"])
+unmatched_output_path = "./feature/output/unmatched_regions.csv"
+pd.DataFrame({"Unmatched_Regions": list(unmatched_regions)}).to_csv(unmatched_output_path, index=False)
+
+# Save final data
+output_csv_path = "./feature/output/data_with_clusters.csv"
+df_with_regions.to_csv(output_csv_path, index=False)
+
+print(f"Clustered data saved at {output_csv_path}")
+print(f"Unmatched regions saved at {unmatched_output_path}")
