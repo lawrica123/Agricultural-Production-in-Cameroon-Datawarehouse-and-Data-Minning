@@ -38,6 +38,7 @@ try:
             VALUES (%s, %s, %s, %s , %s)
         """, (row['Climate_ID'], row['Climate_Name'], row['Avg_Temperature'], row['Humidity_Level'], row['Annual_Rainfall'] ))
 
+
     # Load and insert crop_Dim data
     crop_df = pd.read_csv(crop_csv)
     for _, row in crop_df.iterrows():
